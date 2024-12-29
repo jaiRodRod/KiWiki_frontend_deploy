@@ -31,7 +31,13 @@ const UploadFile = ({setFormState}) => {
     try {
       const response = await axios.post(
         'https://api.cloudinary.com/v1_1/dlj4y9vd3/upload/',
-        formData
+        formData,
+      {
+        headers: {
+          // No incluir el encabezado Authorization
+          'Authorization': undefined, // Eliminar explícitamente el encabezado
+        },
+      }
       );
       setLoading(false);
       alert('Archivo subido correctamente');
