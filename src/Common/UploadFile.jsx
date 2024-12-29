@@ -30,7 +30,7 @@ const UploadFile = ({setFormState}) => {
 
     try {
       const response = await axios.post(
-        'https://api.cloudinary.com/v1_1/dlj4y9vd3/upload',
+        'https://api.cloudinary.com/v1_1/dlj4y9vd3/upload/',
         formData
       );
       setLoading(false);
