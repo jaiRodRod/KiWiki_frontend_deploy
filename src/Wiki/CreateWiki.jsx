@@ -6,7 +6,7 @@ import apiEndpoint from '../assets/apiEndpoints.json'
 import GetInfoWiki from './GetInfoWiki.js';
 import { format } from "@formkit/tempo"
 import { useSession } from '../Common/SessionProvider'
-import {SendEmail} from '../Emails/SendEmail.jsx'
+import {handleSendEmail} from '../Emails/SendEmail.jsx'
 
 function CreateWiki(){
 
@@ -103,7 +103,7 @@ function CreateWiki(){
                 setMessageType('error'); 
             });
 
-            <SendEmail email_reciver={formData.creador} subject='Se ha creado correctamente la wiki.' body={'Se ha creado correctamente la Wiki ' + formData.nombre + '.'}></SendEmail>
+            handleSendEmail(formData.creador, 'Se ha creado correctamente la wiki.', 'Se ha creado correctamente la Wiki ' + formData.nombre + '.')
 
         }
 
