@@ -74,7 +74,9 @@ function CreateWiki(){
             }
 
             if(Object.keys(patchData).length > 0){
-                await axios.patch(apiEndpoint.api+ '/wikis/' + id + '/modify_wiki' + '/', patchData)
+                const fullUrl = apiEndpoint.api + '/wikis/' + id + '/modify_wiki/';
+                console.log(fullUrl)
+                await axios.patch(fullUrl, patchData)
                 .then((response) => {
                     console.log(response)
                 })
