@@ -2,7 +2,6 @@ import {useEffect, useState } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import GetInfoEntry from './GetInfoEntry.js';
-import apiEndpoint from '../assets/apiEndpoints.json'
 import axios from "axios";
 import Navbar from "../Common/NavBar";
 import FormTextInput from "../Common/FormTextInput";
@@ -138,7 +137,7 @@ function PostEntry() {
     console.log(updatedEntry);
 
     try {
-      const response = await axios.post(url.active_urlBase + "/entries", updatedEntry, {
+      const response = await axios.post(url.active_urlBase + "/entries/", updatedEntry, {
         headers: { "Content-Type": "application/json" },
       });
       await axios.patch(url.active_urlBase + "/wikis/" + wiki_id + "/add_entry/" + response.data._id)
