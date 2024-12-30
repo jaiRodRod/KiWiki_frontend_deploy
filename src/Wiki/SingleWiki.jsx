@@ -6,40 +6,39 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useSession } from '../Common/SessionProvider'
 
+function SingleWiki({ item, removeItem }) {
+  const { user } = useSession();
+  const navigate = useNavigate();
 
-function SingleWiki({ item }) {
+  const clickWiki = () => {
+    navigate('/wikis/' + `${item.name}` + '/entries', {
+      state: { "id": item._id, "name": item.name },
+    });
+  };
 
-    const { user } = useSession();
-    const navigate = useNavigate()
+  const modifyHandler = (event) => {
+    event.stopPropagation();
+    navigate('/wikis/' + `${item.name}` + '/modify', {
+      state: { "id": item._id },
+    });
+  };
 
-    const clickWiki = () => {
+  const deleteHandler = async (event) => {
+    event.stopPropagation();
 
-        navigate('/wikis/'+`${item.name}`+'/entries' , {
-            state: { "id": item._id,
-                    "name": item.name},
-          });
+    try {
+      await axios.delete(apiEndpoint.api + '/wikis/' + item._id + '/');
+
+      removeItem(item._id);
+
+    } catch (error) {
+      console.error('Error deleting item:', error);
     }
+  };
 
-    const modifyHandler = (event) =>{
-      event.stopPropagation()
-      navigate('/wikis/'+`${item.name}`+'/modify' , {
-        state: { "id": item._id },
-      });
-    }
-
-    const deleteHandler = async(event) =>{
-      event.stopPropagation()
-      await axios.delete(apiEndpoint.api + '/wikis/' + item._id + '/')
-
-    }
-
-
-
-    return (
-
+  return (
     <div onClick={clickWiki} tabIndex={0} className="flex w-full flex-col bg-white shadow-md rounded-lg p-6 m-4 hover:shadow-xl transition-shadow duration-300 hover:border-2 hover:border-green-900 focus:outline-none focus:ring-2 focus:ring-green-900">
       <header className="flex items-center space-x-4 mb-4">
-
         <div className='flex'>
           <Avatar>{item.name.charAt(0).toUpperCase()}</Avatar>
         </div>
@@ -49,27 +48,18 @@ function SingleWiki({ item }) {
           <p className="text-sm text-gray-500 w-4/6 break-words">Creado por: {item.creator}</p>
         </div>
         <div className='flex-1 flex flex-row justify-end'>
-          {((user?.rol === 'ADMIN'))&& (
-          <button
-            onClick={modifyHandler}
-            className='m-3'
-            tabIndex={0}
-          >
-            <EditIcon color='warning' fontSize='large'></EditIcon>
-          </button>
+          {((user?.rol === 'ADMIN')) && (
+            <button onClick={modifyHandler} className='m-3' tabIndex={0}>
+              <EditIcon color='warning' fontSize='large'></EditIcon>
+            </button>
           )}
 
-          {((user?.rol === 'ADMIN'))&& (
-          <button
-            onClick={deleteHandler}
-            className='m-3'
-            tabIndex={0}
-          >
-            <DeleteIcon color='error' fontSize='large'></DeleteIcon>
-          </button>
+          {((user?.rol === 'ADMIN')) && (
+            <button onClick={deleteHandler} className='m-3' tabIndex={0}>
+              <DeleteIcon color='error' fontSize='large'></DeleteIcon>
+            </button>
           )}
         </div>
-
       </header>
 
       <section className="mb-4">
@@ -83,6 +73,5 @@ function SingleWiki({ item }) {
     </div>
   );
 }
-
 
 export default SingleWiki;
