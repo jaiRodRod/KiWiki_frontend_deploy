@@ -155,7 +155,7 @@ function PostEntry() {
     console.log(updatedEntry);
 
     try {
-      const response = await axios.post(url.active_urlBase + "/entries", updatedEntry, {
+      const response = await axios.post(url.active_urlBase + "/entries/", updatedEntry, {
         headers: { "Content-Type": "application/json" },
       });
       await axios.patch(url.active_urlBase + "/wikis/" + wiki_id + "/add_entry/" + response.data._id)
