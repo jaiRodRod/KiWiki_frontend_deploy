@@ -103,7 +103,7 @@ function CreateWiki(){
                 setMessageType('error'); 
             });
 
-            handleSendEmail(String(formData.creador), 'Wiki creada correctamente', 'Todo perfecto en ' + formData.nombre + '!')
+            await handleSendEmail(String(formData.creador), 'Wiki creada correctamente', 'Todo perfecto en ' + formData.nombre + '!')
 
         }
 
