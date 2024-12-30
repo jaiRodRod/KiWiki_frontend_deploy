@@ -19,7 +19,7 @@ function Wiki(){
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const {selectedOption, query, dateOption} = useParams();
-    const {reload, setReload} = useState(undefined);
+    const [reload, setReload] = useState(null);
 
     let urlApi = ''
 
@@ -31,7 +31,7 @@ function Wiki(){
 
     useEffect(() =>{
         
-        if(reload != undefined){
+        if(reload != null){
             search(dateOption)
         }
 
