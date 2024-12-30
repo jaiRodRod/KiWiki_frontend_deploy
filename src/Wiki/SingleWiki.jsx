@@ -5,9 +5,10 @@ import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useSession } from '../Common/SessionProvider'
+import { useState } from 'react';
 
 
-function SingleWiki({ item }) {
+function SingleWiki({ item, setreload}) {
 
     const { user } = useSession();
     const navigate = useNavigate()
@@ -30,6 +31,7 @@ function SingleWiki({ item }) {
     const deleteHandler = async(event) =>{
       event.stopPropagation()
       await axios.delete(apiEndpoint.api + '/wikis/' + item._id)
+      setreload(item._id);
 
     }
 
