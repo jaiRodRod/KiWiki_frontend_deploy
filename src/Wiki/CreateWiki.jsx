@@ -21,6 +21,7 @@ function CreateWiki(){
     const [modifyData, setModifyData] = useState([]);
     const [date, setDate] = useState('');
     const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
 
     const location = useLocation();
     const {id} = location.state || {}; 
@@ -72,13 +73,16 @@ function CreateWiki(){
                 .then((response) => {
                     console.log(response);
                     setMessage('Wiki modificada correctamente.');
+                    setMessageType('modified'); 
                 })
                 .catch((error) => {
                     console.log(error);
                     setMessage('Hubo un error al modificar la wiki.');
+                    setMessageType('error'); 
                 });
             } else {
                 setMessage('No hay cambios para guardar.');
+                setMessageType('notice'); 
             }
         } else {
             await axios.post(apiEndpoint.api + '/wikis/',{
@@ -90,14 +94,19 @@ function CreateWiki(){
             .then((response) => {
                 console.log(response);
                 setMessage('Wiki creada correctamente.');
+                setMessageType('success'); 
             })
             .catch((error) => {
                 console.log(error);
                 setMessage('Hubo un error al crear la wiki.');
+                setMessageType('error'); 
             });
         }
 
-        setTimeout(() => setMessage(''), 3000);
+        setTimeout(() => {
+            setMessage('');
+            setMessageType('');
+        }, 3000);
     }
 
     return(
@@ -169,7 +178,11 @@ function CreateWiki(){
                 </div>
 
                 {message && (
-                    <p className="mt-4 text-center text-sm font-medium text-green-600">
+                    <p className={`mt-4 text-center text-sm font-medium ${
+                        messageType === 'success' ? 'text-green-600' :
+                        messageType === 'error' ? 'text-red-600' :
+                        messageType === 'modified' ? 'text-yellow-600' : 'text-gray-600'
+                    }`}>
                         {message}
                     </p>
                 )}
