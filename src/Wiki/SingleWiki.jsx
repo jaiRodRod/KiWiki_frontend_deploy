@@ -29,7 +29,7 @@ function SingleWiki({ item }) {
 
     const deleteHandler = async(event) =>{
       event.stopPropagation()
-      await axios.delete(apiEndpoint.api + 'wikis/' + item._id + '/')
+      await axios.delete(apiEndpoint.api + '/wikis/' + item._id + '/')
 
     }
 
