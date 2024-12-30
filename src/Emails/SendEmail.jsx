@@ -6,10 +6,15 @@ export const handleSendEmail = async (email_reciver, subject, body) => {
 
   try {
     // Construimos la query string con los parámetros
-    const response = await axios.post(endpoint, {
+    const response = await axios.post(endpoint, null, {
+      params: {
         email: email_reciver, // Cambia el nombre del parámetro si es diferente en el backend
         subject: subject,
         body: body,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     console.log("Correo enviado exitosamente:", response.data);
