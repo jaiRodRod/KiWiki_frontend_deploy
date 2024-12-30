@@ -32,7 +32,7 @@ function Wiki(){
     useEffect(() =>{
         
         if(reload != null){
-            setData((prevData) => prevData.filter((item) => item._id !== id));
+            setData((prevData) => prevData.filter((item) => item._id !== reload));
         }
 
     },[reload])
